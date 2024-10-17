@@ -1,3 +1,37 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "CloudFormation template para S3 bucket, VPC, y IAM Role"
+
+Resources:
+  # S3 Bucket
+  MyS3Bucket:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      BucketName: "my-unique-bucket-name-123456"
+
+  # VPC
+  MyVPC:
+    Type: "AWS::EC2::VPC"
+    Properties:
+      CidrBlock: "10.0.0.0/16"
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      InstanceTenancy: default
+      Tags:
+        - Key: Name
+          Value: MyVPC
+
+  # IAM Role
+  MyIAMRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: "sts:AssumeRole"
+      Path: "/"
 
 Outputs:
   S3BucketName:
